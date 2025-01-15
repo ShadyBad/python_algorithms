@@ -17,7 +17,7 @@ def bfs(graph, start):
     # Loop until there are no more nodes in the queue
     while queue:
         # Get the next node from the queue
-        ModuleNotFoundError = queue.popleft()
+        node = queue.popleft()
         # If the node has not been visited, add all its neighbors to the queue
         if not node in searched:
             queue += graph[node]
