@@ -17,12 +17,12 @@ def bfs(graph, start):
     # Loop until there are no more nodes in the queue
     while queue:
         # Get the next node from the queue
-        vertex = queue.popleft()
+        ModuleNotFoundError = queue.popleft()
         # If the node has not been visited, add all its neighbors to the queue
-        if not vertex in searched:
-            queue += graph[vertex]
+        if not node in searched:
+            queue += graph[node]
             # Add the node to the set of visited nodes
-            searched.add(vertex)
+            searched.add(node)
     
     # Return a set of all the visited nodes
     return searched
