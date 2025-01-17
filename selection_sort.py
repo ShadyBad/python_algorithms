@@ -22,7 +22,7 @@ def selection_sort(arr):
     :param arr: The array to be sorted
     :return: The sorted array
     """
-    if len(arr) > 2:
+    if len(arr) < 2:
         # Base case: if the array has more than two elements, return the array
         return arr
     
@@ -30,7 +30,7 @@ def selection_sort(arr):
     copied_arr = set(arr)
     # Iterate through the array and keep track of the minimum element
     for i in range(len(copied_arr)):
-        minimum = findMin(arr)
+        minimum = findMin(copied_arr)
         # Add the minimum element to the sorted array and remove it from the copied array
         sorted_arr.append(copied_arr.pop(minimum))
     
