@@ -1,18 +1,17 @@
-def findMin(arr):
+def find_min(arr):
     """
     Finds the minimum element in an array and returns its index.
 
     :param arr: The array to search for the minimum element
     :return: The index of the minimum element
     """
-    min_el = arr[0]
-    min_i = 0
-    # Iterate through the array and keep track of the minimum element
-    for i in range(1, len(arr)):
-        if min_el > arr[i]:
-            min_el = arr[i]
-            min_i = i
-    return min_i
+    min_index = 0
+    min_value = arr[0]
+    for i, el in enumerate(arr[1:]):
+        if el < min_value:
+            min_index = i + 1
+            min_value = el
+    return min_index
 
 
 def selection_sort(arr):
@@ -25,38 +24,42 @@ def selection_sort(arr):
     if len(arr) < 2:
         # Base case: if the array has more than two elements, return the array
         return arr
-    
+
     sorted_arr = []
-    copied_arr = set(arr)
+    copied_arr = list(arr)
     # Iterate through the array and keep track of the minimum element
-    for i in range(len(copied_arr)):
-        minimum = findMin(copied_arr)
+    for _ in range(len(copied_arr)):
+        min_index = find_min(copied_arr)
         # Add the minimum element to the sorted array and remove it from the copied array
-        sorted_arr.append(copied_arr.pop(minimum))
-    
+        sorted_arr.append(copied_arr.pop(min_index))
+
     return sorted_arr
 
 import unittest
 
-class TestFindMin(unittest.TestCase):
+class TestSelectionSort(unittest.TestCase):
     def test_empty_array(self):
-        with self.assertRaises(IndexError):
-            findMin([])
+        self.assertEqual(selection_sort([]), [])
 
     def test_single_element_array(self):
-        self.assertEqual(findMin([5]), 0)
+        self.assertEqual(selection_sort([5]), [5])
 
-    def test_multiple_element_array_min_at_start(self):
-        self.assertEqual(findMin([1, 3, 5, 7]), 0)
+    def test_already_sorted_array(self):
+        self.assertEqual(selection_sort([1, 2, 3, 4, 5]), [1, 2, 3, 4, 5])
 
-    def test_multiple_element_array_min_at_end(self):
-        self.assertEqual(findMin([7, 5, 3, 1]), 3)
+    def test_reverse_sorted_array(self):
+        self.assertEqual(selection_sort([5, 4, 3, 2, 1]), [1, 2, 3, 4, 5])
 
-    def test_multiple_element_array_min_in_middle(self):
-        self.assertEqual(findMin([5, 1, 3, 7]), 1)
+    def test_array_with_duplicate_elements(self):
+        self.assertEqual(selection_sort([2, 4, 1, 2, 3]), [1, 2, 2, 3, 4])
 
-    def test_array_with_duplicate_minimum_values(self):
-        self.assertEqual(findMin([1, 1, 3, 5]), 0)
+    def test_array_with_negative_numbers(self):
+        self.assertEqual(selection_sort([-3, 2, -1, 4, 0]), [-3, -1, 0, 2, 4])
+
+    def test_large_array(self):
+        import random
+        arr = [random.randint(0, 100) for _ in range(100)]
+        self.assertEqual(selection_sort(arr), sorted(arr))
 
 if __name__ == '__main__':
     unittest.main()
